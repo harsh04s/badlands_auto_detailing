@@ -310,7 +310,9 @@
       <!-- FORM -->
       <div class="form-card">
 
-        <form id="bookingForm">
+        <form id="bookingForm"
+              action="https://formspree.io/f/mbgrkydn"
+              method="POST">
 
           <div class="form-section">
             <h3>Your details</h3>
@@ -341,13 +343,13 @@
           <div class="form-section">
             <h3>Service(s) you're interested in *</h3>
             <div class="checkbox-grid" id="serviceGroup">
-              <label class="check-item"><input type="checkbox" name="service" value="Exterior Detail"> Exterior Detail</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Interior Detail"> Interior Detail</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Full Detail Package"> Full Detail Package</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Paint Correction"> Paint Correction</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Ceramic Coating"> Ceramic Coating</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Wheels & Tires"> Wheels &amp; Tires</label>
-              <label class="check-item"><input type="checkbox" name="service" value="Not sure — need advice"> Not sure — need advice</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Exterior Detail"> Exterior Detail</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Interior Detail"> Interior Detail</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Full Detail Package"> Full Detail Package</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Paint Correction"> Paint Correction</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Ceramic Coating"> Ceramic Coating</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Wheels & Tires"> Wheels &amp; Tires</label>
+              <label class="check-item"><input type="checkbox" name="service[]" value="Not sure — need advice"> Not sure — need advice</label>
             </div>
           </div>
 
@@ -397,7 +399,7 @@
 
           <div class="submit-row">
             <button type="submit" class="btn btn-primary" id="submitBtn">Send Quote Request</button>
-            <span class="form-note">Opens your email app with everything filled in — nothing sends automatically.</span>
+            <span class="form-note">Your request will be sent directly to Badlands Detailing.</span>
           </div>
 
         </form>
@@ -406,8 +408,8 @@
           <div class="success-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
-          <h3>Your request is ready to send</h3>
-          <p>We opened your email app with your details filled in. Just hit send and we'll get back to you shortly — usually same day.</p>
+          <h3>Request received!</h3>
+<p>Thanks! We've received your detailing request and will get back to you shortly to confirm pricing and availability.</p>
           <a href="tel:4034584195" class="btn btn-ghost">Or call (403) 458-4195</a>
         </div>
 
@@ -464,48 +466,48 @@
   const form = document.getElementById('bookingForm');
   const successCard = document.getElementById('successCard');
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
+ form.addEventListener('submit', async function(e){
+  e.preventDefault();
 
-    const services = Array.from(document.querySelectorAll('input[name="service"]:checked')).map(el => el.value);
-    if(services.length === 0){
-      alert('Please select at least one service.');
-      return;
+  const services = Array.from(
+    document.querySelectorAll('input[name="service[]"]:checked')
+  ).map(el => el.value);
+
+  if (services.length === 0) {
+    alert('Please select at least one service.');
+    return;
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      form.style.display = 'none';
+      successCard.classList.add('show');
+    } else {
+      alert('Something went wrong. Please try again.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Quote Request';
     }
 
-    const data = {
-      name: document.getElementById('name').value,
-      phone: document.getElementById('phone').value,
-      email: document.getElementById('email').value,
-      vehicle: document.getElementById('vehicle').value,
-      services: services.join(', '),
-      location: document.querySelector('input[name="location"]:checked').value,
-      mobileAddress: document.getElementById('mobileAddress').value,
-      date: document.getElementById('date').value,
-      time: document.getElementById('time').value,
-      notes: document.getElementById('notes').value
-    };
-
-    let body = `New quote request from the website:\n\n`;
-    body += `Name: ${data.name}\n`;
-    body += `Phone: ${data.phone}\n`;
-    if(data.email) body += `Email: ${data.email}\n`;
-    body += `Vehicle: ${data.vehicle}\n`;
-    body += `Service(s): ${data.services}\n`;
-    body += `Location: ${data.location}\n`;
-    if(data.mobileAddress) body += `Mobile address: ${data.mobileAddress}\n`;
-    if(data.date) body += `Preferred date: ${data.date}\n`;
-    body += `Preferred time: ${data.time}\n`;
-    if(data.notes) body += `Notes: ${data.notes}\n`;
-
-    const subject = `Quote Request — ${data.name} (${data.vehicle})`;
-    const mailto = `mailto:info@badlandsdetailing.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailto;
-
-    form.style.display = 'none';
-    successCard.classList.add('show');
-  });
+  } catch (error) {
+    alert('Could not send your request. Please try again.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Quote Request';
+  }
+});
 </script>
 
 </body>
