@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Detail | Badlands Detailing — Medicine Hat, AB</title>
+<meta name="description" content="Request a quote or book your vehicle in with Badlands Detailing — Medicine Hat, Alberta. In-shop and mobile detailing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F8F6;
+    --surface: #FFFFFF;
+    --ink: #14213D;
+    --ink-soft: #4A5568;
+    --line: #E2E5E0;
+    --teal: #0E7C86;
+    --teal-dark: #0A5F67;
+    --gold: #E8A33D;
+    --gold-dark: #C6822A;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk', sans-serif;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  section{padding:72px 0;}
+  @media (max-width:720px){
+    section{padding:52px 0;}
+    .wrap{padding:0 20px;}
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:15px;
+    border:1.5px solid transparent;
+    cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-primary{
+    background:var(--teal);
+    color:#fff;
+    box-shadow:0 8px 20px -8px rgba(14,124,134,0.55);
+  }
+  .btn-primary:hover{background:var(--teal-dark); transform:translateY(-2px);}
+  .btn-primary:disabled{opacity:.6; cursor:not-allowed; transform:none;}
+  .btn-ghost{
+    border-color:var(--line);
+    color:var(--ink);
+    background:transparent;
+  }
+  .btn-ghost:hover{border-color:var(--ink); transform:translateY(-2px);}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(247,248,246,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:20px;
+  }
+  .logo .mark{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg, var(--teal), var(--teal-dark));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:16px; font-weight:700;
+    box-shadow:0 6px 14px -6px rgba(14,124,134,0.6);
+  }
+  .logo .sub{
+    display:block; font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:0.14em; color:var(--ink-soft);
+    font-weight:500; text-transform:uppercase; margin-top:1px;
+  }
+  .nav-links{
+    display:flex; align-items:center; gap:36px;
+    font-size:15px; font-weight:500;
+  }
+  .nav-links a{color:var(--ink-soft); transition:color .15s;}
+  .nav-links a:hover{color:var(--teal);}
+  .nav-cta{display:flex; align-items:center; gap:14px;}
+  .nav-phone{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px; font-weight:500; color:var(--ink);
+    display:flex; align-items:center; gap:6px;
+  }
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .nav-phone{display:none;}
+  }
+
+  /* ---------- Page hero ---------- */
+  .page-hero{padding:56px 0 8px;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; color:var(--teal-dark);
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:var(--gold); display:inline-block;
+  }
+  .page-hero h1{font-size:clamp(32px,4.4vw,48px); font-weight:700; margin-bottom:14px;}
+  .page-hero p{color:var(--ink-soft); font-size:16px; max-width:520px;}
+
+  /* ---------- Layout ---------- */
+  .booking-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:40px;
+    align-items:start;
+  }
+  @media (max-width:900px){ .booking-grid{grid-template-columns:1fr;} }
+
+  /* ---------- Form card ---------- */
+  .form-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:40px;
+  }
+  @media (max-width:600px){ .form-card{padding:26px;} }
+
+  .form-section{margin-bottom:32px;}
+  .form-section:last-of-type{margin-bottom:0;}
+  .form-section h3{
+    font-size:13px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--teal-dark); font-family:'IBM Plex Mono', monospace;
+    margin-bottom:18px; font-weight:500;
+  }
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  @media (max-width:560px){ .field-row{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field label{font-size:13.5px; font-weight:600; color:var(--ink);}
+  .field .hint{font-size:12px; color:var(--ink-soft); font-weight:400;}
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field input[type="date"],
+  .field select,
+  .field textarea{
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    font-family:'Inter', sans-serif;
+    font-size:14.5px;
+    color:var(--ink);
+    background:var(--bg);
+    transition:border-color .15s;
+    width:100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--teal);
+  }
+  .field textarea{resize:vertical; min-height:100px;}
+
+  .checkbox-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  @media (max-width:560px){ .checkbox-grid{grid-template-columns:1fr;} }
+  .check-item{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:10px;
+    padding:12px 14px; cursor:pointer; font-size:14px;
+    transition:border-color .15s, background .15s;
+  }
+  .check-item:has(input:checked){
+    border-color:var(--teal); background:#EAF4F4;
+  }
+  .check-item input{accent-color:var(--teal); width:16px; height:16px;}
+
+  .radio-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .radio-item{
+    flex:1 1 200px;
+    display:flex; align-items:center; gap:10px;
+    border:1.5px solid var(--line); border-radius:10px;
+    padding:14px; cursor:pointer; font-size:14px;
+    transition:border-color .15s, background .15s;
+  }
+  .radio-item:has(input:checked){
+    border-color:var(--teal); background:#EAF4F4;
+  }
+  .radio-item input{accent-color:var(--teal); width:16px; height:16px;}
+  .radio-item .r-title{font-weight:600; display:block;}
+  .radio-item .r-sub{font-size:12px; color:var(--ink-soft);}
+
+  #mobileAddressField{display:none; margin-top:14px;}
+  #mobileAddressField.show{display:flex;}
+
+  .submit-row{
+    display:flex; align-items:center; gap:16px; margin-top:8px; flex-wrap:wrap;
+  }
+  .form-note{font-size:12.5px; color:var(--ink-soft);}
+
+  /* success state */
+  .success-card{
+    display:none;
+    text-align:center;
+    padding:60px 30px;
+  }
+  .success-card.show{display:block;}
+  .success-icon{
+    width:64px; height:64px; border-radius:50%;
+    background:#EAF4F4; color:var(--teal);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 22px;
+  }
+  .success-card h3{font-size:22px; margin-bottom:10px;}
+  .success-card p{color:var(--ink-soft); max-width:380px; margin:0 auto 24px;}
+
+  /* ---------- Sidebar ---------- */
+  .side-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:20px;
+    padding:32px; margin-bottom:20px;
+  }
+  .side-card h4{font-size:15px; margin-bottom:16px;}
+  .info-row{display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--line);}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .icon{
+    width:36px; height:36px; border-radius:9px; background:#EAF4F4; color:var(--teal);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .info-row h5{font-size:13.5px; font-weight:600; margin-bottom:2px;}
+  .info-row p, .info-row a{font-size:13.5px; color:var(--ink-soft);}
+  .info-row a:hover{color:var(--teal);}
+
+  .side-card.dark{
+    background:linear-gradient(160deg, var(--teal-dark), var(--teal));
+    color:#fff;
+  }
+  .side-card.dark h4{color:#fff;}
+  .side-card.dark p{color:rgba(255,255,255,0.85); font-size:14px; margin-bottom:18px;}
+  .side-card.dark .btn-ghost{border-color:rgba(255,255,255,0.5); color:#fff; width:100%; justify-content:center;}
+  .side-card.dark .btn-ghost:hover{border-color:#fff;}
+
+  footer{padding:40px 0; border-top:1px solid var(--line); text-align:center;}
+  footer p{font-size:13px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <span class="mark">BD</span>
+      <span>Badlands Detailing
+        <span class="sub">Medicine Hat, AB</span>
+      </span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#services">Services</a>
+      <a href="index.html#process">Process</a>
+      <a href="index.html#reviews">Reviews</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="nav-phone" href="tel:4034584195">(403) 458-4195</a>
+      <a class="btn btn-primary" href="book.html">Book a Detail</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="eyebrow mono">Get a quote</div>
+      <h1>Book your detail or request a quote</h1>
+      <p>Tell us about your vehicle and what you need. We'll get back to you to confirm pricing and a time — usually same day.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:32px;">
+    <div class="wrap booking-grid">
+
+      <!-- FORM -->
+      <div class="form-card">
+
+        <form id="bookingForm">
+
+          <div class="form-section">
+            <h3>Your details</h3>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Full name *</label>
+                <input type="text" id="name" name="name" required placeholder="Jordan Reimer">
+              </div>
+              <div class="field">
+                <label for="phone">Phone number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="(403) 555-0123">
+              </div>
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="hint">(optional)</span></label>
+              <input type="email" id="email" name="email" placeholder="you@example.com">
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Your vehicle</h3>
+            <div class="field">
+              <label for="vehicle">Year, make &amp; model *</label>
+              <input type="text" id="vehicle" name="vehicle" required placeholder="2021 Ford F-150">
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Service(s) you're interested in *</h3>
+            <div class="checkbox-grid" id="serviceGroup">
+              <label class="check-item"><input type="checkbox" name="service" value="Exterior Detail"> Exterior Detail</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Interior Detail"> Interior Detail</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Full Detail Package"> Full Detail Package</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Paint Correction"> Paint Correction</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Ceramic Coating"> Ceramic Coating</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Wheels & Tires"> Wheels &amp; Tires</label>
+              <label class="check-item"><input type="checkbox" name="service" value="Not sure — need advice"> Not sure — need advice</label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Where should we detail it? *</h3>
+            <div class="radio-row">
+              <label class="radio-item">
+                <input type="radio" name="location" value="In-shop (Allowance Ave SE)" required checked>
+                <span><span class="r-title">In-shop</span><span class="r-sub">1014 Allowance Ave SE</span></span>
+              </label>
+              <label class="radio-item">
+                <input type="radio" name="location" value="Mobile — come to me" required>
+                <span><span class="r-title">Mobile</span><span class="r-sub">We come to you</span></span>
+              </label>
+            </div>
+            <div class="field" id="mobileAddressField">
+              <label for="mobileAddress">Your address</label>
+              <input type="text" id="mobileAddress" name="mobileAddress" placeholder="Street address, Medicine Hat">
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Preferred timing</h3>
+            <div class="field-row">
+              <div class="field">
+                <label for="date">Preferred date</label>
+                <input type="date" id="date" name="date">
+              </div>
+              <div class="field">
+                <label for="time">Preferred time</label>
+                <select id="time" name="time">
+                  <option value="Flexible">Flexible</option>
+                  <option value="Morning">Morning</option>
+                  <option value="Afternoon">Afternoon</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Anything else?</h3>
+            <div class="field">
+              <label for="notes">Notes <span class="hint">(stains, pet hair, scratches, etc.)</span></label>
+              <textarea id="notes" name="notes" placeholder="Tell us anything that will help us quote accurately..."></textarea>
+            </div>
+          </div>
+
+          <div class="submit-row">
+            <button type="submit" class="btn btn-primary" id="submitBtn">Send Quote Request</button>
+            <span class="form-note">Opens your email app with everything filled in — nothing sends automatically.</span>
+          </div>
+
+        </form>
+
+        <div class="success-card" id="successCard">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3>Your request is ready to send</h3>
+          <p>We opened your email app with your details filled in. Just hit send and we'll get back to you shortly — usually same day.</p>
+          <a href="tel:4034584195" class="btn btn-ghost">Or call (403) 458-4195</a>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <div class="side-card">
+          <h4>Contact info</h4>
+          <div class="info-row">
+            <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+            <div><h5>Shop address</h5><p>1014 Allowance Ave SE, Medicine Hat, AB T1A 3G8</p></div>
+          </div>
+          <div class="info-row">
+            <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.6a2 2 0 01-.5 2.1L8 9.6a16 16 0 006.4 6.4l1.2-1.2a2 2 0 012.1-.5c.8.3 1.7.5 2.6.6a2 2 0 011.7 2z"/></svg></div>
+            <div><h5>Phone</h5><a href="tel:4034584195">(403) 458-4195</a></div>
+          </div>
+          <div class="info-row">
+            <div class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <div><h5>Hours</h5><p>Mon–Sat: 8AM–6PM · Sun: Closed</p></div>
+          </div>
+        </div>
+
+        <div class="side-card dark">
+          <h4>Prefer to talk it through?</h4>
+          <p>Call or text us directly and we'll walk through pricing on the spot.</p>
+          <a href="tel:4034584195" class="btn btn-ghost">Call (403) 458-4195</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Badlands Detailing · 1014 Allowance Ave SE, Medicine Hat, AB T1A 3G8</p>
+  </div>
+</footer>
+
+<script>
+  const mobileRadios = document.querySelectorAll('input[name="location"]');
+  const mobileField = document.getElementById('mobileAddressField');
+  mobileRadios.forEach(r => {
+    r.addEventListener('change', () => {
+      if(document.querySelector('input[name="location"]:checked').value.startsWith('Mobile')){
+        mobileField.classList.add('show');
+      } else {
+        mobileField.classList.remove('show');
+      }
+    });
+  });
+
+  const form = document.getElementById('bookingForm');
+  const successCard = document.getElementById('successCard');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const services = Array.from(document.querySelectorAll('input[name="service"]:checked')).map(el => el.value);
+    if(services.length === 0){
+      alert('Please select at least one service.');
+      return;
+    }
+
+    const data = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      email: document.getElementById('email').value,
+      vehicle: document.getElementById('vehicle').value,
+      services: services.join(', '),
+      location: document.querySelector('input[name="location"]:checked').value,
+      mobileAddress: document.getElementById('mobileAddress').value,
+      date: document.getElementById('date').value,
+      time: document.getElementById('time').value,
+      notes: document.getElementById('notes').value
+    };
+
+    let body = `New quote request from the website:\n\n`;
+    body += `Name: ${data.name}\n`;
+    body += `Phone: ${data.phone}\n`;
+    if(data.email) body += `Email: ${data.email}\n`;
+    body += `Vehicle: ${data.vehicle}\n`;
+    body += `Service(s): ${data.services}\n`;
+    body += `Location: ${data.location}\n`;
+    if(data.mobileAddress) body += `Mobile address: ${data.mobileAddress}\n`;
+    if(data.date) body += `Preferred date: ${data.date}\n`;
+    body += `Preferred time: ${data.time}\n`;
+    if(data.notes) body += `Notes: ${data.notes}\n`;
+
+    const subject = `Quote Request — ${data.name} (${data.vehicle})`;
+    const mailto = `mailto:info@badlandsdetailing.ca?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+
+    form.style.display = 'none';
+    successCard.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
